@@ -4,11 +4,14 @@ import android.os.Bundle
 import android.widget.SeekBar
 import android.widget.TextView
 import android.widget.Toast
+import androidx.activity.viewModels
 import com.example.temperatureconverter.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
+
+    private val viewModel: converterViewModel by viewModels()
     lateinit var celsiusSlider : SeekBar
     lateinit var celsiusValue : TextView
     lateinit var fahrenheitSlider : SeekBar
@@ -28,6 +31,7 @@ class MainActivity : AppCompatActivity() {
         celsiusSlider.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(celsiusSeekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 var celsiusDouble = progress.toDouble()
+                viewModel.celsiusValue = celsiusDouble
                 celsiusValue.text = celsiusDouble.toString() + "°C"
                 celsiusToFahrenheit(celsiusDouble)
             }
@@ -40,6 +44,7 @@ class MainActivity : AppCompatActivity() {
         fahrenheitSlider.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(celsiusSeekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 var fahrenheitDouble = progress.toDouble()
+                viewModel.fahrenheitValue = fahrenheitDouble
                 fahrenheitValue.text = fahrenheitDouble.toString() + "°F"
                 fahrenheitToCelsius(fahrenheitDouble)
             }
