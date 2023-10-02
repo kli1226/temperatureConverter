@@ -3,7 +3,6 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.SeekBar
 import android.widget.TextView
-import android.widget.Toast
 import androidx.activity.viewModels
 import com.example.temperatureconverter.databinding.ActivityMainBinding
 import com.google.android.material.snackbar.Snackbar
@@ -13,9 +12,9 @@ class MainActivity : AppCompatActivity() {
 
     private val viewModel: converterViewModel by viewModels()
     lateinit var celsiusSlider : SeekBar
-    lateinit var celsiusValue : TextView
+    lateinit var celsiusValueText : TextView
     lateinit var fahrenheitSlider : SeekBar
-    lateinit var fahrenheitValue : TextView
+    lateinit var fahrenheitValueText : TextView
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -24,15 +23,15 @@ class MainActivity : AppCompatActivity() {
         setContentView(binding.root)
 
         celsiusSlider = binding.celsiusSeekBar
-        celsiusValue = binding.celsiusValue
+        celsiusValueText = binding.celsiusValue
         fahrenheitSlider = binding.fahrenheitSeekBar
-        fahrenheitValue = binding.fahrenheitValue
+        fahrenheitValueText = binding.fahrenheitValue
 
         celsiusSlider.setOnSeekBarChangeListener(object : SeekBar.OnSeekBarChangeListener {
             override fun onProgressChanged(celsiusSeekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 var celsiusDouble = progress.toDouble()
                 viewModel.celsiusValue = celsiusDouble
-                celsiusValue.text = celsiusDouble.toString() + "°C"
+                celsiusValueText.text = celsiusDouble.toString() + "°C"
                 celsiusToFahrenheit(celsiusDouble)
             }
 
@@ -45,7 +44,7 @@ class MainActivity : AppCompatActivity() {
             override fun onProgressChanged(celsiusSeekBar: SeekBar?, progress: Int, fromUser: Boolean) {
                 var fahrenheitDouble = progress.toDouble()
                 viewModel.fahrenheitValue = fahrenheitDouble
-                fahrenheitValue.text = fahrenheitDouble.toString() + "°F"
+                fahrenheitValueText.text = fahrenheitDouble.toString() + "°F"
                 fahrenheitToCelsius(fahrenheitDouble)
             }
 
